@@ -9,13 +9,14 @@ Hammer API is a lightweight Node.js Express service with basic GET and POST endp
 - In-memory data store (no database required).
 - Built for benchmarking performance testing tools!
 
-## Installation
+## Installation & 
 
 ```bash
 git clone git@github.com:mahtabnejad90/hammer-api.git
 cd hammer-api
 npm install
 npm i
+npm start # runs the api
 ```
 
 ## Usage
