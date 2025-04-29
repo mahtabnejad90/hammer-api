@@ -47,7 +47,7 @@ http://localhost:3000/data
 
 - ~~Phase 1 > Create a simple API service with ability to POST and GET requests~~
 - ~~Phase 2 > Create a simple UI which interacts directly with the API~~
-- Phase 4 > Add a database
-- Phase 5 > Create performance scripts using different tooling
-- Phase 6 > Generate baseline reports based on performance benchmarking of different tooling
-- Phase 7 > Add Token-based Authentication
+- Phase 3 > Add a database
+- Phase 4 > Create performance scripts using different tooling
+- Phase 5 > Generate baseline reports based on performance benchmarking of different tooling
+- Phase 6 > Add Token-based Authentication
