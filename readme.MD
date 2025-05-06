@@ -13,16 +13,19 @@ Hammer API is a lightweight Node.js Express service with basic GET and POST endp
 
 ## Installation & Execution
 
+**Pre-requisites**
+
+- Node.js
+- Docker
 
 1. Run `git clone git@github.com:mahtabnejad90/hammer-api.git` command on your terminal
 2. Copy `.env.example` file from the root of this project and and paste it within the root of this project rename it to `.env`
 3. Re-route your terminal to wherever this repository was cloned via the following commands (respective to your operating system):
      - Windows OS: `cd C:\Users\YOUR-PATH\hammer-api`
      - Mac: `cd YOUR-PATH/hammer-api`
-
-4. Run `npm install` command on your terminal.
-5. Run `docker run --name hammer-cassandra -p 9042:9042 -d cassandra:latest` on a seperate terminal window or tab.
-6. Run `npm start` on the same terminal as step 3 and 4. 
+4. Open and start docker
+5. Run `npm install` command on your terminal.
+6. Run `npm docker:start` command on your terminal.
 
 ## Usage
 
@@ -63,11 +66,36 @@ USE hammerapi;
 SELECT * FROM data_entries;
 ```
 
+## Testing
+
+### Performance Testing
+
+#### Gatling
+
+1 - From root of this project execute `cd src/tests/performance/gatling` on your terminal.
+2 - Execute `npm install` on your terminal.
+3 - Execute `npx gatling run --simulation baseline` to execute the performance test.
+
+#### K6
+
+1 - Install K6 for your given OS via this link: https://grafana.com/docs/k6/latest/set-up/install-k6/
+2 - Execute `npm run k6:baseline` on your terminal from the root of this project.
+
+#### Artillery
+
+1 - Install Artillery globally via `npm install -G artillery@latest` command.
+2 - Execute `npm run artillery:baseline` on your terminal from the root of this project.
+
 ## Development/Testing Phases
 
 - ~~Phase 1 > Create a simple API service with ability to POST and GET requests~~
 - ~~Phase 2 > Create a simple UI which interacts directly with the API~~
 - ~~Phase 3 > Add a database~~
-- Phase 4 > Create performance scripts using different tooling
-- Phase 5 > Generate baseline reports based on performance benchmarking of different tooling
-- Phase 6 > Add Token-based Authentication
+- ~~Phase 4 > Add docker-compose and dockerfile setup~~
+- ~~Phase 5 > Create performance scripts using different Gatling against 5000 requests within 50 seconds~~
+- Phase 5.1 > Generate baseline reports using Gatling for the p95 metric
+- ~~Phase 6 > Create performance scripts using different k6 against 5000 requests within 50 seconds~~
+- Phase 6.1 > Generate baseline reports using K6 for the p95 metric
+- ~~Phase 7 > Create performance scripts using different Artillery against 5000 requests within 50 seconds~~
+- Phase 7.1 > Generate baseline reports using Artillery for the p95 metric
+- Phase 9 > Add Token-based Authentication

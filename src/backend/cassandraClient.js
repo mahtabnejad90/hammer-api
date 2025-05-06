@@ -1,21 +1,26 @@
 const cassandra = require('cassandra-driver');
-require('dotenv').config()
+require('dotenv').config();
+
+const contactPoints = [process.env.CASSANDRA_HOST || 'cassandra'];
+const localDataCenter = process.env.CASSANDRA_DC || 'datacenter1';
 
 const client = new cassandra.Client({
-  contactPoints: ['127.0.0.1'], 
-  localDataCenter: process.env.LOCAL_DATACENTRE_NAME,
-  keyspace: process.env.DATABASE_KEYSPACE,
-  socketOptions: {
-    readTimeout: 30000
-  }
+  contactPoints,
+  localDataCenter,
+  keyspace: 'hammerapi',
+  socketOptions: { readTimeout: 30000 }
+});
+
+const tempClient = new cassandra.Client({
+  contactPoints,
+  localDataCenter,
+  socketOptions: { readTimeout: 30000 }
 });
 
 async function setupDatabase() {
   try {
-    const tempClient = new cassandra.Client({
-      contactPoints: ['127.0.0.1'],
-      localDataCenter: 'datacenter1',
-    });
+    // Use the existing tempClient already configured for Docker
+    await tempClient.connect();
 
     await tempClient.execute(`
       CREATE KEYSPACE IF NOT EXISTS hammerapi
@@ -29,7 +34,7 @@ async function setupDatabase() {
     await tempClient.shutdown();
 
     await client.connect();
-    
+
     await client.execute(`
       CREATE TABLE IF NOT EXISTS data_entries (
         id UUID PRIMARY KEY,
@@ -41,7 +46,7 @@ async function setupDatabase() {
     console.log('✅ Table ensured');
   } catch (error) {
     console.error('❌ Error setting up database:', error);
-    process.exit(1); 
+    process.exit(1);
   }
 }
 

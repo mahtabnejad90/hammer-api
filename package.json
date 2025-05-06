@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node src/backend/server.js"
+    "start": "node src/backend/server.js",
+    "docker:start": "docker-compose up --build",
+    "docker:stop": "docker-compose down",
+    "k6:baseline": "K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=reports/k6/k6-baseline-$(date +'%Y-%m-%d-%H-%M-%S').html k6 run src/tests/performance/k6/baseline.js",
+    "artillery:baseline": "npx artillery run --output reports/artillery/artillery-baseline--$(date +'%Y-%m-%d-%H-%M-%S').json src/tests/performance/artillery/baseline.yml"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +19,8 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "artillery": "^2.0.22"
   }
 }

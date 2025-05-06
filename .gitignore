@@ -1,2 +1,6 @@
 node_modules
 .env
+src/tests/performance/gatling/target
+target
+reports/k6/*.html
+reports/artillery/*.json

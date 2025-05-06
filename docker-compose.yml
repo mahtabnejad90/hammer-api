@@ -1,0 +1,31 @@
+services:
+  cassandra:
+    image: cassandra:latest
+    container_name: hammer-cassandra
+    ports:
+      - "9042:9042"
+    environment:
+      - CASSANDRA_CLUSTER_NAME=HammerCluster
+      - CASSANDRA_DC=datacenter1
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+    healthcheck:
+      test: ["CMD", "cqlsh", "-e", "describe keyspaces"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+
+  hammer-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hammer-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      cassandra:
+        condition: service_healthy
+    environment:
+      - CASSANDRA_HOST=cassandra
+      - CASSANDRA_DC=datacenter1
+    volumes:
+      - .:/app
