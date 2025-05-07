@@ -98,4 +98,5 @@ SELECT * FROM data_entries;
 - Phase 6.1 > Generate baseline reports using K6 for the p95 metric
 - ~~Phase 7 > Create performance scripts using different Artillery against 5000 requests within 50 seconds~~
 - Phase 7.1 > Generate baseline reports using Artillery for the p95 metric
-- Phase 9 > Add Token-based Authentication
+- Phase 8 > Add Token-based Authentication
+- Phase 9 > Add More data fields to increase data size for a given object 
