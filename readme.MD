@@ -72,19 +72,19 @@ SELECT * FROM data_entries;
 
 #### Gatling
 
-1 - From root of this project execute `cd src/tests/performance/gatling` on your terminal.
-2 - Execute `npm install` on your terminal.
-3 - Execute `npx gatling run --simulation baseline` to execute the performance test.
+1. From root of this project execute `cd src/tests/performance/gatling` on your terminal.
+2. Execute `npm install` on your terminal.
+3. Execute `npx gatling run --simulation baseline` to execute the performance test.
 
 #### K6
 
-1 - Install K6 for your given OS via this link: https://grafana.com/docs/k6/latest/set-up/install-k6/
-2 - Execute `npm run k6:baseline` on your terminal from the root of this project.
+1. Install K6 for your given OS via this link: https://grafana.com/docs/k6/latest/set-up/install-k6/
+2. Execute `npm run k6:baseline` on your terminal from the root of this project.
 
 #### Artillery
 
-1 - Install Artillery globally via `npm install -G artillery@latest` command.
-2 - Execute `npm run artillery:baseline` on your terminal from the root of this project.
+1. Install Artillery globally via `npm install -G artillery@latest` command.
+2. Execute `npm run artillery:baseline` on your terminal from the root of this project.
 
 ## Development/Testing Phases
 
