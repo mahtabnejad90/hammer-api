@@ -4,12 +4,13 @@ Hammer API is a lightweight Node.js Express service with basic GET and POST endp
 
 ## Features
 
-- `GET /data`: Fetches all posted entries.
-- `POST /data`: Adds new entries with a name and value.
-- Simple UI which allows user input.
-- **Cassandra database integration** for persistent storage.
-- Automatically creates Keyspace and Table if not present.
-- Built for benchmarking performance testing tools.
+- 🔐 JWT-based token authentication (`/login`)
+- 📘 Swagger UI (`/api-docs`) based on OpenAPI 3.0 spec
+- 🗃️ `GET /data`: Fetch all entries (secured)
+- 📝 `POST /data`: Add new entries (secured)
+- 👩‍💻 Simple HTML/JS-based frontend UI
+- 🧱 Cassandra database integration with auto Keyspace/Table creation
+- ⚡ Built for performance testing benchmarks
 
 ## Installation & Execution
 
@@ -25,7 +26,7 @@ Hammer API is a lightweight Node.js Express service with basic GET and POST endp
      - Mac: `cd YOUR-PATH/hammer-api`
 4. Open and start docker
 5. Run `npm install` command on your terminal.
-6. Run `npm docker:start` command on your terminal.
+6. Run `npm run docker:start` command on your terminal.
 
 ## Usage
 
@@ -34,29 +35,44 @@ Hammer API is a lightweight Node.js Express service with basic GET and POST endp
 To utilise the post endpoint to create some basic data, just run the following command on your terminal
 
 ```bash
-curl -X POST http://localhost:3000/data \
+curl -X POST http://localhost:3000/login \
   -H "Content-Type: application/json" \
-  -d '{"name": "Some Name", "value": "Random Value"}'
+  -d '{"username": "your-name"}'
   ```
 
+This returns a JWT token. Use this token for authenticated requests like so:
+
+```bash
+curl -X GET http://localhost:3000/data \
+  -H "Authorization: Bearer <your-token>"
+  ```
 ### UI
 
-Here's an example on how the UI is represented with the user input ability as well as the data stored
+Includes a simple login + data entry interface.
 
-![UI Example](resources/ui-image/ui-example.png)
+	1.	Open browser to:
+http://localhost:3000
+	2.	Enter a username to log in and receive a JWT.
+	3.	Once authenticated, submit new data using:
+	•	First Name
+	•	Last Name
+	•	Date of Birth
+	•	Country
+	•	Postal Code
 
-### GET Request
+### Swagger UI
 
-Whilst server is still running and you have already created some data via the POST request method, open your browser and enter the follow url+endpoint to view the data create
+Accessible at:
+http://localhost:3000/api-docs
 
-http://localhost:3000/data
+Explore and test the /login, /data endpoints interactively using OpenAPI 3.0 spec.
 
 ## Database Notes
 
-- Uses Apache Cassandra via the official DataStax Node.js driver.
-- Keyspace: hammerapi
-- Table: data_entries
-- Automatically created if missing on server startup.
+	•	Database: Apache Cassandra
+	•	Keyspace: hammerapi
+	•	Table: data_entries
+	•	Auto-created on server start
 
 To inspect your data:
 
@@ -88,15 +104,17 @@ SELECT * FROM data_entries;
 
 ## Development/Testing Phases
 
-- ~~Phase 1 > Create a simple API service with ability to POST and GET requests~~
-- ~~Phase 2 > Create a simple UI which interacts directly with the API~~
-- ~~Phase 3 > Add a database~~
-- ~~Phase 4 > Add docker-compose and dockerfile setup~~
-- ~~Phase 5 > Create performance scripts using different Gatling against 5000 requests within 50 seconds~~
-- Phase 5.1 > Generate baseline reports using Gatling for the p95 metric
-- ~~Phase 6 > Create performance scripts using different k6 against 5000 requests within 50 seconds~~
-- Phase 6.1 > Generate baseline reports using K6 for the p95 metric
-- ~~Phase 7 > Create performance scripts using different Artillery against 5000 requests within 50 seconds~~
-- Phase 7.1 > Generate baseline reports using Artillery for the p95 metric
-- Phase 8 > Add Token-based Authentication
-- Phase 9 > Add More data fields to increase data size for a given object 
+	•	✅ Phase 1: Basic GET/POST API
+	•	✅ Phase 2: Basic UI interaction
+	•	✅ Phase 3: Cassandra integration
+	•	✅ Phase 4: Docker & docker-compose setup
+	•	✅ Phase 5: Gatling baseline script against 5000 req in 50s
+	•	⏳ Phase 5.1: Gatling baseline report (p95)
+	•	✅ Phase 6: K6 baseline script against 5000 req in 50s
+	•	⏳ Phase 6.1: K6 baseline report (p95)
+	•	✅ Phase 7: Artillery baseline script against 5000 req in 50s
+	•	⏳ Phase 7.1: Artillery baseline report (p95)
+	•	✅ Phase 8: Add Token-based Authentication
+	•	✅ Phase 9: Replace name/value with realistic data fields
+  •	✅ Phase 10: Update performance tests scripts to add bulk-data and get  
+  

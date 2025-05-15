@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  title: Hammer API
+  version: 1.0.0
+paths:
+  /login:
+    post:
+      summary: Login to get JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+      responses:
+        '200':
+          description: Token generated
+  /data:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get all entries
+      responses:
+        '200':
+          description: Success
+    post:
+      security:
+        - bearerAuth: []
+      summary: Add new data entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [firstName, lastName, dateOfBirth, country, postalCode]
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                dateOfBirth:
+                  type: string
+                country:
+                  type: string
+                postalCode:
+                  type: string
+      responses:
+        '201':
+          description: Created
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

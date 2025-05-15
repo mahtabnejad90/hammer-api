@@ -1,22 +1,43 @@
-import { simulation, atOnceUsers, global, scenario, getParameter, pause, jmesPath, csv, feed, rampUsers, constantUsersPerSec } from "@gatling.io/core";
-import { http, status } from "@gatling.io/http";
+import { simulation, constantUsersPerSec, scenario } from "@gatling.io/core";
+import { http, status, jsonBody } from "@gatling.io/http";
 
-export default simulation((setUp) => {
+export default simulation(async (setUp) => {
 
-// http protocol
-const httpProtocol = http
-    .baseUrl("http://localhost:3000")
+  const baseUrl = "http://localhost:3000";
+
+  const loginResponse = await http(baseUrl)
+    .post("/login")
+    .body(jsonBody({ username: "perfuser" }))
+    .asJson()
+    .send();
+
+  const token = loginResponse.body.token;
+
+  for (let i = 0; i < 500; i++) {
+    await http(baseUrl)
+      .post("/data")
+      .header("Authorization", `Bearer ${token}`)
+      .body(jsonBody({
+        firstName: `Test${i}`,
+        lastName: "User",
+        dateOfBirth: "1990-01-01",
+        country: "UK",
+        postalCode: "AB12CD"
+      }))
+      .asJson()
+      .send();
+  }
+
+  const httpProtocol = http
+    .baseUrl(baseUrl)
     .acceptHeader("application/json")
     .contentTypeHeader("application/json")
+    .header("Authorization", `Bearer ${token}`);
 
-// scenario
-const scn1 = scenario("Get data from HammerAPI")
-    .exec(http("GetAllData").get("/data")
-        .check(status().is(200))
-    )
+  const scn = scenario("Get data from HammerAPI")
+    .exec(http("GetAllData").get("/data").check(status().is(200)));
 
-// simulation configuration
-setUp(
-    scn1.injectOpen(constantUsersPerSec(100).during(50)).protocols(httpProtocol)
+  setUp(
+    scn.injectOpen(constantUsersPerSec(100).during(50)).protocols(httpProtocol)
   );
-})
+});

@@ -19,7 +19,6 @@ const tempClient = new cassandra.Client({
 
 async function setupDatabase() {
   try {
-    // Use the existing tempClient already configured for Docker
     await tempClient.connect();
 
     await tempClient.execute(`
@@ -35,14 +34,17 @@ async function setupDatabase() {
 
     await client.connect();
 
-    await client.execute(`
-      CREATE TABLE IF NOT EXISTS data_entries (
-        id UUID PRIMARY KEY,
-        name text,
-        value text,
-        timestamp timestamp
-      )
-    `);
+await client.execute(`
+  CREATE TABLE IF NOT EXISTS data_entries (
+    id UUID PRIMARY KEY,
+    firstName text,
+    lastName text,
+    dateOfBirth text,
+    country text,
+    postalCode text,
+    timestamp timestamp
+  )
+`);
     console.log('✅ Table ensured');
   } catch (error) {
     console.error('❌ Error setting up database:', error);

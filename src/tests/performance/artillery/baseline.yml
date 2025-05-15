@@ -3,7 +3,15 @@ config:
   phases:
     - duration: 50
       arrivalRate: 100
+  processor: "./artillery-helpers.js"
+  payload:
+    path: ""
+  http:
+    requestTimeout: 5000
 scenarios:
   - flow:
+      - function: "loginAndInsert"
       - get:
           url: "/data"
+          headers:
+            Authorization: "Bearer {{ token }}"
