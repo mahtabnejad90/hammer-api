@@ -104,17 +104,16 @@ SELECT * FROM data_entries;
 
 ## Development/Testing Phases
 
-	•	✅ Phase 1: Basic GET/POST API
-	•	✅ Phase 2: Basic UI interaction
-	•	✅ Phase 3: Cassandra integration
-	•	✅ Phase 4: Docker & docker-compose setup
-	•	✅ Phase 5: Gatling baseline script against 5000 req in 50s
-	•	⏳ Phase 5.1: Gatling baseline report (p95)
-	•	✅ Phase 6: K6 baseline script against 5000 req in 50s
-	•	⏳ Phase 6.1: K6 baseline report (p95)
-	•	✅ Phase 7: Artillery baseline script against 5000 req in 50s
-	•	⏳ Phase 7.1: Artillery baseline report (p95)
-	•	✅ Phase 8: Add Token-based Authentication
-	•	✅ Phase 9: Replace name/value with realistic data fields
-  •	✅ Phase 10: Update performance tests scripts to add bulk-data and get  
-  
+- ✅ Phase 1: Basic GET/POST API
+- ✅ Phase 2: Basic UI interaction
+- ✅ Phase 3: Cassandra integration
+- ✅ Phase 4: Docker & docker-compose setup
+- ✅ Phase 5: Gatling baseline script against 5000 req in 50s
+- ⏳ Phase 5.1: Gatling baseline report (p95)
+- ✅ Phase 6: K6 baseline script against 5000 req in 50s
+- ⏳ Phase 6.1: K6 baseline report (p95)
+- ✅ Phase 7: Artillery baseline script against 5000 req in 50s
+- ⏳ Phase 7.1: Artillery baseline report (p95)
+- ✅ Phase 8: Add Token-based Authentication
+- ✅ Phase 9: Replace name/value with realistic data fields
+- ✅ Phase 10: Update performance tests scripts to add bulk-data and get 
