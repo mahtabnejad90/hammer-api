@@ -6,7 +6,8 @@
   "main": "target/bundle",
   "dependencies": {
     "@gatling.io/core": "3.13.501",
-    "@gatling.io/http": "3.13.501"
+    "@gatling.io/http": "3.13.501",
+    "axios": "^1.9.0"
   },
   "devDependencies": {
     "@gatling.io/cli": "3.13.501",
@@ -17,7 +18,6 @@
     "clean": "rimraf target",
     "format": "prettier --write \"**/*.js\"",
     "build": "gatling build",
-    "recorder": "gatling recorder",
-    "computerdatabase": "gatling run --simulation computerdatabase"
+    "recorder": "gatling recorder"
   }
 }

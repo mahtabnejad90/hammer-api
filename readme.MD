@@ -116,4 +116,5 @@ SELECT * FROM data_entries;
 - ⏳ Phase 7.1: Artillery baseline report (p95)
 - ✅ Phase 8: Add Token-based Authentication
 - ✅ Phase 9: Replace name/value with realistic data fields
-- ✅ Phase 10: Update performance tests scripts to add bulk-data and get 
+- ✅ Phase 10: Update k6/artillery performance tests scripts to add bulk-data and be able to hit the get request endpoint
+- ⏳ Phase 11: Update gatling performance tests script to add bulk-data and be able to hit the get request endpoint
