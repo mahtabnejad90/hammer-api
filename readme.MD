@@ -86,9 +86,16 @@ SELECT * FROM data_entries;
 
 ### Performance Testing
 
-All performance tests now include automatic data cleanup before execution and use standardized load configurations:
+All performance tests now include automatic data cleanup before execution. There are two types of tests available:
+
+**Baseline Tests (GET requests):**
 - **Duration**: 60 seconds
 - **Rate**: 100 requests per second  
+- **Pattern**: Constant arrival rate
+
+**POST Load Tests (POST requests):**
+- **Duration**: 300 seconds (5 minutes)
+- **Rate**: 300 requests per second
 - **Pattern**: Constant arrival rate
 
 **Data Cleanup**: Run `npm run cleanup:data` to delete all existing data before tests.
@@ -103,8 +110,9 @@ All performance tests now include automatic data cleanup before execution and us
 - `npm run gatling:token` → Get fresh authentication token
 - `npm run gatling:setup` → Create 500 test records
 - `npm run gatling:config` → Generate config file
-- `npm run gatling:baseline` → Run load test only
-- `npm run gatling:full` → Full test (token + setup + load test)
+- `npm run gatling:baseline` → Run GET baseline test (100 req/s, 60s)
+- `npm run gatling:post-load` → Run POST load test (300 req/s, 300s)
+- `npm run gatling:full` → Full test (token + setup + baseline test)
 
 **Advanced Usage:**
 From `src/tests/performance/gatling` directory:
@@ -117,27 +125,34 @@ node gatling-helper.js --full-setup
 
 **Configuration:**
 - Token stored in: `gatling.env` (root directory)
-- Load test: 100 requests/second for 60 seconds (constant rate)
+- Baseline test: 100 requests/second for 60 seconds (GET requests)
+- POST load test: 300 requests/second for 300 seconds (POST requests)
 - Auto data cleanup before each test run
 - Test data: 500 user records with authentication
 
 #### K6
 
 1. Install K6 for your given OS via this link: https://grafana.com/docs/k6/latest/set-up/install-k6/
-2. Execute `npm run k6:baseline` on your terminal from the root of this project.
+2. Execute performance tests from the root of this project:
+   - `npm run k6:baseline` → GET baseline test (100 req/s, 60s)
+   - `npm run k6:post-load` → POST load test (300 req/s, 300s)
 
 **Configuration:**
-- Load test: 100 requests/second for 60 seconds (constant arrival rate)
+- Baseline test: 100 requests/second for 60 seconds (GET requests)
+- POST load test: 300 requests/second for 300 seconds (POST requests)
 - Test data: 500 user records with authentication
 - Auto data cleanup before each test run
 
 #### Artillery
 
 1. Install Artillery globally via `npm install -G artillery@latest` command.
-2. Execute `npm run artillery:baseline` on your terminal from the root of this project.
+2. Execute performance tests from the root of this project:
+   - `npm run artillery:baseline` → GET baseline test (100 req/s, 60s)
+   - `npm run artillery:post-load` → POST load test (300 req/s, 300s)
 
 **Configuration:**
-- Load test: 100 requests/second for 60 seconds (constant arrival rate)
+- Baseline test: 100 requests/second for 60 seconds (GET requests)
+- POST load test: 300 requests/second for 300 seconds (POST requests)
 - Test data: 500 user records with authentication
 - Auto data cleanup before each test run
 
@@ -160,3 +175,4 @@ node gatling-helper.js --full-setup
 - ✅ Phase 12: Standardize all performance test configurations (60s, 100 req/sec constant rate)
 - ✅ Phase 13: Add data cleanup helper for performance tests
 - ✅ Phase 14: Modern UI redesign with signup/signin and delete functionality
+- ✅ Phase 15: Add POST load tests for all frameworks (300 req/sec, 5 minutes)

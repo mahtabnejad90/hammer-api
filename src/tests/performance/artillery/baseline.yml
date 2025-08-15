@@ -3,9 +3,7 @@ config:
   phases:
     - duration: 60
       arrivalRate: 100
-  processor: "./artillery-helpers.js"
-  payload:
-    path: ""
+  processor: "./artillery-helpers.cjs"
   http:
     requestTimeout: 5000
 scenarios:

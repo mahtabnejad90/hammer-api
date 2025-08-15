@@ -1,0 +1,22 @@
+config:
+  target: "http://localhost:1990"
+  phases:
+    - duration: 300
+      arrivalRate: 300
+  processor: "./artillery-helpers.cjs"
+  http:
+    requestTimeout: 5000
+scenarios:
+  - flow:
+      - function: "loginAndGetToken"
+      - post:
+          url: "/data"
+          headers:
+            Authorization: "Bearer {{ token }}"
+            Content-Type: "application/json"
+          json:
+            firstName: "LoadTest{{ $randomInt(0, 100000) }}"
+            lastName: "PostUser"
+            dateOfBirth: "1990-01-01"
+            country: "UK"
+            postalCode: "AB12CD"

@@ -1,6 +1,22 @@
 const http = require('http');
 
 module.exports = {
+  loginAndGetToken: function (userContext, events, done) {
+    const axios = require('axios');
+    
+    axios.post("http://localhost:1990/login", {
+      username: "perfuser"
+    })
+    .then(loginRes => {
+      userContext.vars.token = loginRes.data.token;
+      done();
+    })
+    .catch(error => {
+      console.error('Login error:', error);
+      done(error);
+    });
+  },
+
   loginAndInsert: async function (userContext, events, done) {
     const baseUrl = "http://localhost:1990";
 
