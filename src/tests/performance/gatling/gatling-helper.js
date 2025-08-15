@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-
-// Comprehensive Gatling Helper - handles token generation, data setup, and config generation
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
@@ -10,7 +8,6 @@ const BASE_URL = 'http://localhost:1990';
 const ENV_FILE = path.join(process.cwd(), '../../../gatling.env');
 const CONFIG_FILE = './src/config.js';
 
-// Load environment variables
 function loadEnv() {
   dotenv.config({ path: ENV_FILE });
   return {
@@ -19,7 +16,6 @@ function loadEnv() {
   };
 }
 
-// Get fresh token from API and save to gatling.env
 async function getToken() {
   try {
     console.log('🔑 Getting fresh token...');
@@ -31,8 +27,7 @@ async function getToken() {
     const token = response.data.token;
     console.log('✅ Token obtained successfully');
     
-    // Update gatling.env file
-    const envContent = `# Gatling Load Test Environment Variables\nSTATIC_TOKEN=${token}\n`;
+    const envContent = `STATIC_TOKEN=${token}\n`;
     fs.writeFileSync(ENV_FILE, envContent);
     
     console.log('💾 Token saved to gatling.env');
@@ -43,7 +38,6 @@ async function getToken() {
   }
 }
 
-// Generate config file from environment variables for Gatling
 function generateConfig() {
   try {
     console.log('⚙️  Generating config file...');
@@ -55,12 +49,10 @@ function generateConfig() {
       process.exit(1);
     }
     
-    const configContent = `// Auto-generated config - do not edit manually
-export const STATIC_TOKEN = "${env.STATIC_TOKEN}";
+    const configContent = `export const STATIC_TOKEN = "${env.STATIC_TOKEN}";
 export const BASE_URL = "${env.BASE_URL}";
 `;
     
-    // Ensure src directory exists
     if (!fs.existsSync('./src')) {
       fs.mkdirSync('./src');
     }
@@ -73,12 +65,10 @@ export const BASE_URL = "${env.BASE_URL}";
   }
 }
 
-// Setup test data (500 records)
 async function setupData() {
   try {
     console.log('📊 Setting up test data...');
     
-    // Login to get token
     const loginResponse = await axios.post(`${BASE_URL}/login`, {
       username: 'perfuser'
     });
@@ -86,7 +76,6 @@ async function setupData() {
     const token = loginResponse.data.token;
     console.log('✅ Login successful for data setup');
     
-    // Create 500 test records
     for (let i = 0; i < 500; i++) {
       await axios.post(`${BASE_URL}/data`, {
         firstName: `Test${i}`,
@@ -113,7 +102,6 @@ async function setupData() {
   }
 }
 
-// Main function to handle command line arguments
 async function main() {
   const args = process.argv.slice(2);
   
@@ -153,7 +141,6 @@ Examples:
   }
 }
 
-// Run if called directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch(console.error);
 }

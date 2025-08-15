@@ -45,7 +45,23 @@ await client.execute(`
     timestamp timestamp
   )
 `);
-    console.log('✅ Table ensured');
+    console.log('✅ Data entries table ensured');
+
+    await client.execute(`
+      CREATE TABLE IF NOT EXISTS users (
+        id UUID PRIMARY KEY,
+        username text,
+        email text,
+        password text,
+        created_at timestamp
+      )
+    `);
+    console.log('✅ Users table ensured');
+
+    await client.execute(`
+      CREATE INDEX IF NOT EXISTS ON users (username)
+    `);
+    console.log('✅ Users username index ensured');
   } catch (error) {
     console.error('❌ Error setting up database:', error);
     process.exit(1);

@@ -7,7 +7,6 @@ export default simulation((setUp) => {
     .baseUrl(BASE_URL)
     .acceptHeader("application/json");
   
-  // Use token from generated config file (refresh with: npm run get-token)
   const staticToken = STATIC_TOKEN;
   
   const scn = scenario("HammerAPI Static Token Test")
