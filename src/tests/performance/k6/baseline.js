@@ -31,13 +31,13 @@ export function setup() {
 
 export const options = {
   scenarios: {
-    constant_rate_test: {
+    constant_load_test: {
       executor: 'constant-arrival-rate',
       rate: 100,
       timeUnit: '1s',
-      duration: '50s',
+      duration: '60s',
       preAllocatedVUs: 50,
-      maxVUs: 500,
+      maxVUs: 200,
     },
   },
 };

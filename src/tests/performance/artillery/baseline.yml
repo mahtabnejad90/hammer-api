@@ -1,7 +1,7 @@
 config:
   target: "http://localhost:1990"
   phases:
-    - duration: 50
+    - duration: 60
       arrivalRate: 100
   processor: "./artillery-helpers.js"
   payload:

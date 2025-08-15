@@ -17,5 +17,5 @@ export default simulation((setUp) => {
         .check(status().is(200))
     );
   
-  setUp(scn.injectOpen(constantUsersPerSec(100).during(50))).protocols(httpProtocol);
+  setUp(scn.injectOpen(constantUsersPerSec(100).during(60))).protocols(httpProtocol);
 });

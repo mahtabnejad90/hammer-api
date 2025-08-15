@@ -8,7 +8,8 @@ Hammer API is a lightweight Node.js Express service with basic GET and POST endp
 - 📘 Swagger UI (`/api-docs`) based on OpenAPI 3.0 spec
 - 🗃️ `GET /data`: Fetch all entries (secured)
 - 📝 `POST /data`: Add new entries (secured)
-- 👩‍💻 Simple HTML/JS-based frontend UI
+- 🗑️ `DELETE /data`: Delete all entries (secured)
+- 👩‍💻 Modern HTML/JS-based frontend UI with signup/signin functionality
 - 🧱 Cassandra database integration with auto Keyspace/Table creation
 - ⚡ Built for performance testing benchmarks
 
@@ -48,17 +49,16 @@ curl -X GET http://localhost:1990/data \
   ```
 ### UI
 
-Includes a simple login + data entry interface.
+Includes a modern login/signup + data management interface with glass morphism design.
 
 	1.	Open browser to:
 http://localhost:1990
-	2.	Enter a username to log in and receive a JWT.
-	3.	Once authenticated, submit new data using:
-	•	First Name
-	•	Last Name
-	•	Date of Birth
-	•	Country
-	•	Postal Code
+	2.	Choose to either signup (new user) or signin (existing user)
+	3.	Enter username and password to authenticate and receive a JWT
+	4.	Once authenticated, you can:
+	•	Submit new data (First Name, Last Name, Date of Birth, Country, Postal Code)
+	•	View all existing data entries
+	•	Delete all data entries with confirmation dialog
 
 ### Swagger UI
 
@@ -86,6 +86,13 @@ SELECT * FROM data_entries;
 
 ### Performance Testing
 
+All performance tests now include automatic data cleanup before execution and use standardized load configurations:
+- **Duration**: 60 seconds
+- **Rate**: 100 requests per second  
+- **Pattern**: Constant arrival rate
+
+**Data Cleanup**: Run `npm run cleanup:data` to delete all existing data before tests.
+
 #### Gatling
 
 **Quick Start (from root directory):**
@@ -110,7 +117,8 @@ node gatling-helper.js --full-setup
 
 **Configuration:**
 - Token stored in: `gatling.env` (root directory)
-- Load test: 100 requests/second for 50 seconds
+- Load test: 100 requests/second for 60 seconds (constant rate)
+- Auto data cleanup before each test run
 - Test data: 500 user records with authentication
 
 #### K6
@@ -118,10 +126,20 @@ node gatling-helper.js --full-setup
 1. Install K6 for your given OS via this link: https://grafana.com/docs/k6/latest/set-up/install-k6/
 2. Execute `npm run k6:baseline` on your terminal from the root of this project.
 
+**Configuration:**
+- Load test: 100 requests/second for 60 seconds (constant arrival rate)
+- Test data: 500 user records with authentication
+- Auto data cleanup before each test run
+
 #### Artillery
 
 1. Install Artillery globally via `npm install -G artillery@latest` command.
 2. Execute `npm run artillery:baseline` on your terminal from the root of this project.
+
+**Configuration:**
+- Load test: 100 requests/second for 60 seconds (constant arrival rate)
+- Test data: 500 user records with authentication
+- Auto data cleanup before each test run
 
 ## Development/Testing Phases
 
@@ -129,13 +147,16 @@ node gatling-helper.js --full-setup
 - ✅ Phase 2: Basic UI interaction
 - ✅ Phase 3: Cassandra integration
 - ✅ Phase 4: Docker & docker-compose setup
-- ✅ Phase 5: Gatling baseline script against 5000 req in 50s
+- ✅ Phase 5: Gatling baseline script against 6000 req in 60s
 - ⏳ Phase 5.1: Gatling baseline report (p95)
-- ✅ Phase 6: K6 baseline script against 5000 req in 50s
+- ✅ Phase 6: K6 baseline script against 6000 req in 60s
 - ⏳ Phase 6.1: K6 baseline report (p95)
-- ✅ Phase 7: Artillery baseline script against 5000 req in 50s
+- ✅ Phase 7: Artillery baseline script against 6000 req in 60s
 - ⏳ Phase 7.1: Artillery baseline report (p95)
 - ✅ Phase 8: Add Token-based Authentication
 - ✅ Phase 9: Replace name/value with realistic data fields
 - ✅ Phase 10: Update k6/artillery performance tests scripts to add bulk-data and be able to hit the get request endpoint
-- ⏳ Phase 11: Update gatling performance tests script to add bulk-data and be able to hit the get request endpoint
+- ✅ Phase 11: Update gatling performance tests script to add bulk-data and be able to hit the get request endpoint
+- ✅ Phase 12: Standardize all performance test configurations (60s, 100 req/sec constant rate)
+- ✅ Phase 13: Add data cleanup helper for performance tests
+- ✅ Phase 14: Modern UI redesign with signup/signin and delete functionality
