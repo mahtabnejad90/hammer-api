@@ -51,14 +51,13 @@ curl -X GET http://localhost:1990/data \
 
 Includes a modern login/signup + data management interface with glass morphism design.
 
-	1.	Open browser to:
-http://localhost:1990
-	2.	Choose to either signup (new user) or signin (existing user)
-	3.	Enter username and password to authenticate and receive a JWT
-	4.	Once authenticated, you can:
-	•	Submit new data (First Name, Last Name, Date of Birth, Country, Postal Code)
-	•	View all existing data entries
-	•	Delete all data entries with confirmation dialog
+1. Open browser to: http://localhost:1990
+2. Choose to either signup (new user) or signin (existing user)
+3. Enter username and password to authenticate and receive a JWT
+4. Once authenticated, you can:
+   - Submit new data (First Name, Last Name, Date of Birth, Country, Postal Code)
+   - View all existing data entries
+   - Delete all data entries with confirmation dialog
 
 ### Swagger UI
 
