@@ -8,12 +8,21 @@ const { v4: uuidv4 } = require('uuid');
 const { client: cassandraClient, setupDatabase } = require('./cassandraClient');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 1990;
 const SECRET = 'hammer-secret';
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// Add cache-busting headers for static files
+app.use(express.static(path.join(__dirname, '..', 'public'), {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.html') || path.endsWith('.js') || path.endsWith('.css')) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    }
+  }
+}));
 
 // Swagger setup
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
@@ -35,6 +44,12 @@ const authenticate = (req, res, next) => {
 app.post('/login', (req, res) => {
   const { username } = req.body;
   const token = jwt.sign({ username }, SECRET, { expiresIn: '1h' });
+  res.json({ token });
+});
+
+// Static token endpoint for load testing tools
+app.get('/test-token', (req, res) => {
+  const token = jwt.sign({ username: 'load-test-user' }, SECRET, { expiresIn: '24h' });
   res.json({ token });
 });
 

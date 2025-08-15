@@ -8,7 +8,12 @@
     "docker:stop": "docker-compose down",
     "k6:baseline": "K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=reports/k6/k6-baseline-$(date +'%Y-%m-%d-%H-%M-%S').html k6 run src/tests/performance/k6/baseline.js",
     "artillery:baseline": "npx artillery run --output reports/artillery/artillery-baseline--$(date +'%Y-%m-%d-%H-%M-%S').json src/tests/performance/artillery/baseline.yml",
-    "gatling:baseline": "cd src/tests/performance/gatling && npx gatling run --simulation baseline"
+    "gatling:baseline": "cd src/tests/performance/gatling && npx gatling run --simulation baseline",
+    "gatling:setup": "cd src/tests/performance/gatling && npm run setup",
+    "gatling:token": "cd src/tests/performance/gatling && npm run get-token",
+    "gatling:config": "cd src/tests/performance/gatling && npm run generate-config",
+    "gatling:full": "cd src/tests/performance/gatling && npm run test-full",
+    "gatling:install": "cd src/tests/performance/gatling && npm install"
 
 
   },

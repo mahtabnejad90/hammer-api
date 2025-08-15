@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
     container_name: hammer-api
     ports:
-      - "3000:3000"
+      - "1990:1990"
     depends_on:
       cassandra:
         condition: service_healthy

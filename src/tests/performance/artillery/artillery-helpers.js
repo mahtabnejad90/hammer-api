@@ -2,7 +2,7 @@ const http = require('http');
 
 module.exports = {
   loginAndInsert: async function (userContext, events, done) {
-    const baseUrl = "http://localhost:3000";
+    const baseUrl = "http://localhost:1990";
 
     const loginRes = await http.post(`${baseUrl}/login`, {
       json: { username: "perfuser" },

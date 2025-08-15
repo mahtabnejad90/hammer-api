@@ -5,3 +5,4 @@ target
 reports/k6/*.html
 reports/artillery/*.json
 src/tests/performance/gatling/.token
+gatling.env

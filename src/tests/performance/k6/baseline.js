@@ -5,14 +5,14 @@ import { sleep } from 'k6';
 let token;
 
 export function setup() {
-  const loginRes = http.post('http://localhost:3000/login', JSON.stringify({ username: 'perfuser' }), {
+  const loginRes = http.post('http://localhost:1990/login', JSON.stringify({ username: 'perfuser' }), {
     headers: { 'Content-Type': 'application/json' },
   });
 
   token = loginRes.json('token');
 
   for (let i = 0; i < 500; i++) {
-    http.post('http://localhost:3000/data', JSON.stringify({
+    http.post('http://localhost:1990/data', JSON.stringify({
       firstName: `Test${i}`,
       lastName: "User",
       dateOfBirth: "1990-01-01",
@@ -43,7 +43,7 @@ export const options = {
 };
 
 export default function (data) {
-  const res = http.get('http://localhost:3000/data', {
+  const res = http.get('http://localhost:1990/data', {
     headers: {
       Authorization: `Bearer ${data.token}`,
     },

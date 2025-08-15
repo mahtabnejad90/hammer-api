@@ -35,7 +35,7 @@ Hammer API is a lightweight Node.js Express service with basic GET and POST endp
 To utilise the post endpoint to create some basic data, just run the following command on your terminal
 
 ```bash
-curl -X POST http://localhost:3000/login \
+curl -X POST http://localhost:1990/login \
   -H "Content-Type: application/json" \
   -d '{"username": "your-name"}'
   ```
@@ -43,7 +43,7 @@ curl -X POST http://localhost:3000/login \
 This returns a JWT token. Use this token for authenticated requests like so:
 
 ```bash
-curl -X GET http://localhost:3000/data \
+curl -X GET http://localhost:1990/data \
   -H "Authorization: Bearer <your-token>"
   ```
 ### UI
@@ -51,7 +51,7 @@ curl -X GET http://localhost:3000/data \
 Includes a simple login + data entry interface.
 
 	1.	Open browser to:
-http://localhost:3000
+http://localhost:1990
 	2.	Enter a username to log in and receive a JWT.
 	3.	Once authenticated, submit new data using:
 	•	First Name
@@ -63,7 +63,7 @@ http://localhost:3000
 ### Swagger UI
 
 Accessible at:
-http://localhost:3000/api-docs
+http://localhost:1990/api-docs
 
 Explore and test the /login, /data endpoints interactively using OpenAPI 3.0 spec.
 
@@ -88,9 +88,30 @@ SELECT * FROM data_entries;
 
 #### Gatling
 
-1. From root of this project execute `cd src/tests/performance/gatling` on your terminal.
-2. Execute `npm install` on your terminal.
-3. Execute `npx gatling run --simulation baseline` to execute the performance test.
+**Quick Start (from root directory):**
+1. Install dependencies: `npm run gatling:install`
+2. Run complete test: `npm run gatling:full`
+
+**Individual Commands:**
+- `npm run gatling:token` → Get fresh authentication token
+- `npm run gatling:setup` → Create 500 test records
+- `npm run gatling:config` → Generate config file
+- `npm run gatling:baseline` → Run load test only
+- `npm run gatling:full` → Full test (token + setup + load test)
+
+**Advanced Usage:**
+From `src/tests/performance/gatling` directory:
+```bash
+# Use the consolidated helper directly
+node gatling-helper.js --get-token
+node gatling-helper.js --setup-data
+node gatling-helper.js --full-setup
+```
+
+**Configuration:**
+- Token stored in: `gatling.env` (root directory)
+- Load test: 100 requests/second for 50 seconds
+- Test data: 500 user records with authentication
 
 #### K6
 
